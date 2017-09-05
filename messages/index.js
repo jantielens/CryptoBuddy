@@ -51,11 +51,26 @@ bot.dialog('addnotif', require('./dialogs/notifications-add')
 });
 
 bot.dialog('addnotifshortcut', require('./dialogs/notifications-add-shortcut')
-).triggerAction({
-    matches: /^add \w{6} [<>] \d*\.?\d*$/i
-}).cancelAction('cancelAction', 'Ok, cancelling your action!', {
-    matches: /^nevermind$|^cancel$|^stop/i
-});
+).
+    triggerAction({
+        onFindAction: function (context, callback) {
+            // using this function instead of matches to get around the fact Skype thinks < is xml
+            var origtext = context.message.text;
+            if (context.message.sourceEvent.text)
+                origtext = context.message.sourceEvent.text;
+
+            var re = /^add \w{6} [<>] \d*\.?\d*$/i;
+            var myArray = re.exec(origtext);
+
+            if (myArray)
+                callback(null, 1.1);
+            else
+                callback(null, 0);
+        }
+        //matches: /^add \w{6} [<>] \d*\.?\d*$/i
+    }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
+        matches: /^nevermind$|^cancel$|^stop/i
+    });
 
 bot.dialog('removeallnotif', require('./dialogs/notifications-remove')
 ).triggerAction({

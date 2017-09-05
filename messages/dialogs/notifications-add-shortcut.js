@@ -5,6 +5,10 @@ const notUtils = require('./notifications-utils.js');
 
 module.exports = [
     function (session) {
+        var origtext = session.message.text;
+        if (session.message.sourceEvent.text)
+            origtext = session.message.sourceEvent.text;
+
         var sub = notUtils.getBaseNotification('condition', session.message.address);
         // example: add BTCUSD > 10
         sub.symbol = session.message.text.substring(4,10).toUpperCase();
