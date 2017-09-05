@@ -22,7 +22,7 @@ module.exports = [
 
                 }
                 session.dialogData.choiceData = choiceData;
-                builder.Prompts.choice(session, "Which notification do you want to remove?", choiceData);
+                builder.Prompts.choice(session, "Which notification do you want to remove?", choiceData, { listStyle: 2 });
             }
             else {
                 session.send('You don\'t have any notifications.');
