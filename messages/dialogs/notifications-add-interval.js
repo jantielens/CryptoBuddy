@@ -18,7 +18,7 @@ module.exports = [
 
         sub.symbol = session.dialogData.symbol;
         sub.interval = results.response;
-        sub.previousinterval = 0;
+        sub.previousprice = 0;
         sub.isfirstun = true;
 
         notUtils.createNotification(sub).then((r) => {
