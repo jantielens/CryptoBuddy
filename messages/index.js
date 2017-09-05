@@ -33,6 +33,7 @@ bot.dialog('address', function (session) {
 
 bot.dialog('version', function (session) {
     var pjson = require('./package.json');
+    session.send('Active build #{Build.DefinitionName}#');
     session.endDialog('My version is %s', pjson.version);
 }).triggerAction({
     matches: /^version$/i
