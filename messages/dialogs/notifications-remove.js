@@ -21,7 +21,7 @@ module.exports = [
                             label = `${result.symbol} ${result.operator} ${result.price}`;
                             break;
                         case "interval":
-                            label = `${result.symbol} interval ${result.interval} (prev. interval ${result.previousinterval})`;
+                            label = `${result.symbol} interval ${result.interval} (prev. price ${result.previousprice})`;
                             break;
                         default:
                             label = `${result.symbol} unkown type: ` + result.notificationtype;

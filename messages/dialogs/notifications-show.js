@@ -13,7 +13,7 @@ module.exports = [
                             session.send(`${result.symbol} ${result.operator} ${result.price}`);
                             break;
                         case "interval":
-                            session.send(`${result.symbol} interval ${result.interval} (prev. interval ${result.previousinterval})`);
+                            session.send(`${result.symbol} interval ${result.interval} (prev. price ${result.previousprice})`);
                             break;
                         default:
                             session.send(`${result.symbol} unkown type: ` + result.notificationtype);
