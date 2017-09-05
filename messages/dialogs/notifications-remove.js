@@ -14,7 +14,20 @@ module.exports = [
             var choiceData = {};
             if (results.length > 0) {
                 for (result of results) {
-                    var label = `${result.symbol} ${result.operator} ${result.price}`;
+                    var label = '';
+
+                    switch (result.notificationtype) {
+                        case "condition":
+                            label = `${result.symbol} ${result.operator} ${result.price}`;
+                            break;
+                        case "interval":
+                            label = `${result.symbol} interval ${result.interval} (prev. interval ${result.previousinterval})`;
+                            break;
+                        default:
+                            label = `${result.symbol} unkown type: ` + result.notificationtype;
+                            break;
+                    }
+
                     choiceData[label] = {
                         "id": result.id,
                         "_self": result._self

@@ -41,7 +41,7 @@ bot.dialog('version', function (session) {
 
 // *** DIALOGS: Notifcations
 bot.dialog('notifications-common-symbol', require('./dialogs/notifications-common-symbol'));
-bot.dialog('notifications-add-recurringticker', require('./dialogs/notifications-add-recurringticker'));
+bot.dialog('notifications-add-interval', require('./dialogs/notifications-add-interval'));
 bot.dialog('notifications-add-condition', require('./dialogs/notifications-add-condition'));
 
 bot.dialog('addnotif', require('./dialogs/notifications-add')

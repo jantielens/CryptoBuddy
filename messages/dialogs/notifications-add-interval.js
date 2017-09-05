@@ -11,17 +11,20 @@ module.exports = [
         var pair = results.response;
         session.dialogData.symbol = pair;
 
-        builder.Prompts.number(session, 'How long should be the interval (in seconds)?');
+        builder.Prompts.number(session, 'How big should the interval be?');
     },
     function (session, results) {
-        var sub = notUtils.getBaseNotification('recurringtickernotification', session.message.address, results.response);
+        var sub = notUtils.getBaseNotification('interval', session.message.address);
 
         sub.symbol = session.dialogData.symbol;
-        
-        notUtils.createNotification(sub, results.response).then((r) => {
+        sub.interval = results.response;
+        sub.previousinterval = 0;
+        sub.isfirstun = true;
+
+        notUtils.createNotification(sub).then((r) => {
             session.endDialog('Notification created!');
         }).catch((e) => {
-            session.endDialog('Couldn\'t create subscription: ' + e);
+            session.endDialog('Couldn\'t create notification: ' + e);
         });
     }
 ];
