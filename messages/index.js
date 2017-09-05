@@ -20,7 +20,8 @@ bot.localePath(path.join(__dirname, './locale'));
 // *** DIALOGS: General
 bot.dialog('/', function (session) {
     session.send("Hi, I'm your cryptocurrency buddy!");
-    session.send('You said: ' + session.message.text);
+    session.send('You said: ' + session.message.textFormat + '-' + session.message.text);
+    session.send(JSON.stringify(session.message));
     session.endDialog('You can use the following commands: wallet, orders, show fav, add fav, remove fav, auth, status, version.');
 });
 
