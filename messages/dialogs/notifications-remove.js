@@ -6,13 +6,13 @@ var tableSvc = azure.createTableService(process.env["cryptobuddyqueuestorage_STO
 var tablename = 'subscriptions';
 
 const notUtils = require('./notifications-utils.js');
-var choiceData = {};
+
 
 module.exports = [
     function (session) {
         notUtils.retrieveNotifications(session.message.address.channelId, session.message.address.user.id).then(function (results) {
+            var choiceData = {};
             if (results.length > 0) {
-
                 for (result of results) {
                     var label = `${result.symbol} ${result.operator} ${result.price}`;
                     choiceData[label] = {
@@ -21,6 +21,7 @@ module.exports = [
                     };
 
                 }
+                session.dialogData.choiceData = choiceData;
                 builder.Prompts.choice(session, "Which notification do you want to remove?", choiceData);
             }
             else {
@@ -30,7 +31,7 @@ module.exports = [
         });
     },
     function (session, results) {
-        var choice = choiceData[results.response.entity];
+        var choice = session.dialogData.choiceData[results.response.entity];
         notUtils.deleteNotifications(choice._self).then(() => {
             session.send('Your notification has been deleted.');
             session.endDialog();
@@ -38,7 +39,6 @@ module.exports = [
             session.send('Mmm, couldn\'t delete your notification: ' + e);
             session.endDialog();
         });
-
     }
 ];
 
