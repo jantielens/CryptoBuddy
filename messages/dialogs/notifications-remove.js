@@ -5,40 +5,43 @@ var azure = require('azure-storage');
 var tableSvc = azure.createTableService(process.env["cryptobuddyqueuestorage_STORAGE"]);
 var tablename = 'subscriptions';
 
+const notUtils = require('./notifications-utils.js');
+var choiceData = {};
+
 module.exports = [
     function (session) {
-        retrieveSubscriptions(session).then(() => {
-            session.endDialog();
-        }).catch((e) => {
-            session.endDialog(e);
-        });
-    }
-]
+        notUtils.retrieveNotifications(session.message.address.channelId, session.message.address.user.id).then(function (results) {
+            if (results.length > 0) {
 
-function retrieveSubscriptions(session) {
-    console.log('Retrieving subscription ...')
-    return new Promise((resolve, reject) => {
-        var channelid = session.message.address.channelId;
-        var userid = session.message.address.user.id;
-        var partitionkey = `${channelid}${userid}`;
+                for (result of results) {
+                    var label = `${result.symbol} ${result.operator} ${result.price}`;
+                    choiceData[label] = {
+                        "id": result.id,
+                        "_self": result._self
+                    };
 
-        console.log(`Partitionkey: ${partitionkey}`);
-        var query = new azure.TableQuery()
-            .where('PartitionKey eq ?', partitionkey);
-
-        tableSvc.queryEntities(tablename, query, null, function (e, r) {
-            if (e)
-                reject(e);
-            else {
-                for (var i = 0; i < r.entries.length; i++) {
-                    var entry = r.entries[i];
-                    session.send(entry.RowKey._);
-                    tableSvc.deleteEntity(tablename, entry, function (e, r) { 
-                        console.log(r);
-                    });
                 }
-                resolve();
+                builder.Prompts.choice(session, "Which notification do you want to remove?", choiceData);
+            }
+            else {
+                session.send('You don\'t have any notifications.');
+                session.endDialog();
             }
         });
-    });
-}
+    },
+    function (session, results) {
+        var choice = choiceData[results.response.entity];
+        notUtils.deleteNotifications(choice._self).then(() => {
+            session.send('Your notification has been deleted.');
+            session.endDialog();
+        }).catch((e) => {
+            session.send('Mmm, couldn\'t delete your notification: ' + e);
+            session.endDialog();
+        });
+
+    }
+];
+
+
+
+

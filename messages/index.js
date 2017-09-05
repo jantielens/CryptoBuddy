@@ -50,7 +50,14 @@ bot.dialog('addnotif', require('./dialogs/notifications-add')
 
 bot.dialog('removeallnotif', require('./dialogs/notifications-remove')
 ).triggerAction({
-    matches: /^remove all notifications$/i
+    matches: /^remove notification$/i
+}).cancelAction('cancelAction', 'Ok, cancelling your action!', {
+    matches: /^nevermind$|^cancel$|^stop/i
+});
+
+bot.dialog('show', require('./dialogs/notifications-show')
+).triggerAction({
+    matches: /^show notifications$/i
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
     matches: /^nevermind$|^cancel$|^stop/i
 });
