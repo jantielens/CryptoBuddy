@@ -48,6 +48,13 @@ bot.dialog('addnotif', require('./dialogs/notifications-add')
     matches: /^nevermind$|^cancel$|^stop/i
 });
 
+bot.dialog('addnotifshortcut', require('./dialogs/notifications-add-shortcut')
+).triggerAction({
+    matches: /^add \w{6} [<>] \d*\.?\d*$/i
+}).cancelAction('cancelAction', 'Ok, cancelling your action!', {
+    matches: /^nevermind$|^cancel$|^stop/i
+});
+
 bot.dialog('removeallnotif', require('./dialogs/notifications-remove')
 ).triggerAction({
     matches: /^remove notification$/i
