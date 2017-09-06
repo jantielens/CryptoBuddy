@@ -28,7 +28,12 @@ bot.dialog('/', function (session) {
 * Your Bitfinex orders (type 'orders')
 
 You can cancel any action by typing 'stop'. For all the commands see: [this list](https://github.com/jantielens/CryptoBuddy/blob/master/commands.md)`;
-    session.endDialog(mdMsg);
+    session.send(mdMsg);
+    if (!session.userData.regularuser) {
+        session.userData.regularuser = true;
+        session.send('Also, since you are new here, a gentle reminder to check the privacy policy of this bot: https://github.com/jantielens/CryptoBuddy/blob/master/privacypolicy.md');
+    }
+    session.endDialog();
 });
 
 bot.dialog('help', function (session) {
