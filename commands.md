@@ -25,3 +25,4 @@ You need to be authenticated to access your Bitfinex wallet (see Authentication 
 * `status`: shows your current status (e.g. authenticated or not)
 * `version`: shows the version of the chat bot  
 * `debug`: shows usefull information for debugging the bot code
+* `help`: shows a short help message and link
