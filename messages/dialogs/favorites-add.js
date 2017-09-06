@@ -7,7 +7,7 @@ const favutils = require('./favorites-utils.js');
 module.exports = [
     function (session) {
         var symbols = bfxapi.GetSymbols(session).then(function (symbols) {
-            builder.Prompts.choice(session, 'Which coin are you interested in?', symbols, { listStyle: builder.ListStyle.inline });
+            builder.Prompts.choice(session, 'Which coin are you interested in?', symbols, { listStyle: builder.ListStyle.list });
         });
     },
     function (session, results) {

@@ -20,6 +20,7 @@ You need to be authenticated to access your Bitfinex wallet (see Authentication 
 ## Authentication
 * `auth`: starts the dialog to authenticate yourself using a Bitfinex API key and secret. See the [Bitfinex documentation](https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-setup-and-Login) to learn how to create an API key and secret for your account. 
 ## General
+* `stop`: cancels a dialog you have started (e.g. while adding a favorite)
 * `status`: shows your current status (e.g. authenticated or not)
 * `version`: shows the version of the chat bot  
 * `debug`: shows usefull information for debugging the bot code

@@ -5,8 +5,7 @@ const favutils = require('./favorites-utils.js');
 
 module.exports = [
     function (session) {
-        session.send('Which favorite would you like to remove?');
-        builder.Prompts.choice(session, 'Which favorite would you like to remove?', favutils.userFavorites(session), { listStyle: builder.ListStyle.button });
+        builder.Prompts.choice(session, 'Which favorite would you like to remove?', favutils.userFavorites(session), { listStyle: builder.ListStyle.list });
     },
     function (session, results) {
         var favs = favutils.userFavorites(session);

@@ -3,8 +3,6 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
 
-const bfxapi = require('./bfx.js');
-
 var useEmulator = (process.env.NODE_ENV == 'development');
 
 var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
@@ -80,14 +78,14 @@ bot.dialog('addnotifshortcut', require('./dialogs/notifications-add-shortcut')
     matches: /^nevermind$|^cancel$|^stop/i
 });
 
-bot.dialog('removeallnotif', require('./dialogs/notifications-remove')
+bot.dialog('removenotification', require('./dialogs/notifications-remove')
 ).triggerAction({
     matches: /^remove notification$/i
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
     matches: /^nevermind$|^cancel$|^stop/i
 });
 
-bot.dialog('show', require('./dialogs/notifications-show')
+bot.dialog('shownotification', require('./dialogs/notifications-show')
 ).triggerAction({
     matches: /^show notifications$/i
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
@@ -97,26 +95,26 @@ bot.dialog('show', require('./dialogs/notifications-show')
 // *** DIALOGS: Favorites
 bot.dialog('addfav', require('./dialogs/favorites-add')
 ).triggerAction({
-    matches: /^add fav$/i
+    matches: [/^add fav$/i, /^add favorite$/i]
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
     matches: /^nevermind$|^cancel$|^stop/i
 });
 
 bot.dialog('showfav', require('./dialogs/favorites-show')
 ).triggerAction({
-    matches: [/^show favs$/i, /^favs$/i, /^f$/i]
+    matches: [/^show favs$/i, /^favs$/i, /^f$/i, /^show favorites$/i, /^f$/i]
 });
 
 bot.dialog('removefav', require('./dialogs/favorites-remove')
 ).triggerAction({
-    matches: /^remove fav$/i
+    matches: [/^remove fav$/i, /^remove favorite$/i]
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
     matches: /^nevermind$|^cancel$|^stop/i
-});;
+});
 
 bot.dialog('removeallfav', require('./dialogs/favorites-removeall')
 ).triggerAction({
-    matches: /^remove all favs$/i
+    matches: [/^remove all favs$/i, /^remove all favorites$/i]
 });
 
 
@@ -154,7 +152,6 @@ bot.dialog('status', require('./dialogs/authenticate-status')
 ).triggerAction({
     matches: [/^status$/i, /^s$/i]
 });
-
 
 if (useEmulator) {
     var restify = require('restify');

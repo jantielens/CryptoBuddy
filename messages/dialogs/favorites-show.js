@@ -6,38 +6,43 @@ const favutils = require('./favorites-utils.js');
 
 module.exports = [
     function (session) {
-        session.sendTyping();
-
         var favs = favutils.userFavorites(session);
-        var pairCodes = [];
-        favs.forEach(function (element) {
-            var pair = element.replace(/ /g, '');
-            pair = pair.replace('/', '');
-            pairCodes.push(pair);
-        }, this);
+        if (favs.length == 0) {
+            session.endDialog('You don\'t have any favorites yet! You can add one by typing \'add fav\'.');
+        }
+        else {
+            session.sendTyping();
 
-        var actions = pairCodes.map(bfxapi.GetLatestPrice);
-        var results = Promise.all(actions);
+            var pairCodes = [];
+            favs.forEach(function (element) {
+                var pair = element.replace(/ /g, '');
+                pair = pair.replace('/', '');
+                pairCodes.push(pair);
+            }, this);
 
-        var msg = new builder.Message(session);
-        msg.attachmentLayout(builder.AttachmentLayout.carousel)
+            var actions = pairCodes.map(bfxapi.GetLatestPrice);
+            var results = Promise.all(actions);
 
-        results.then(function (prices) {
-            for (var i = 0; i < favs.length; i++) {
-                var symbol = favs[i];
-                var price = prices[i][6];
-                var dailychangeperc = prices[i][5] * 100;
-                var lowprice = prices[i][9];
-                var highprice = prices[i][8];
+            var msg = new builder.Message(session);
+            msg.attachmentLayout(builder.AttachmentLayout.carousel)
 
-                msg.addAttachment(new builder.HeroCard(session)
-                    .title(util.format('%s', symbol))
-                    .subtitle(util.format('Last %s'), price)
-                    .text(util.format('Change %%%s\nLow %s - High %s', dailychangeperc.toFixed(3), lowprice.toFixed(3), highprice.toFixed(3)))
-                );
-            }
-            session.send(msg);
-            session.endDialog();
-        });
+            results.then(function (prices) {
+                for (var i = 0; i < favs.length; i++) {
+                    var symbol = favs[i];
+                    var price = prices[i][6];
+                    var dailychangeperc = prices[i][5] * 100;
+                    var lowprice = prices[i][9];
+                    var highprice = prices[i][8];
+
+                    msg.addAttachment(new builder.HeroCard(session)
+                        .title(util.format('%s', symbol))
+                        .subtitle(util.format('Last %s'), price)
+                        .text(util.format('Change %%%s\nLow %s - High %s', dailychangeperc.toFixed(3), lowprice.toFixed(3), highprice.toFixed(3)))
+                    );
+                }
+                session.send(msg);
+                session.endDialog();
+            });
+        }
     }
 ];
