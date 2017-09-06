@@ -24,8 +24,8 @@ bot.dialog('/', function (session) {
         `I can work with:
 * price notifications (type 'add notification', 'show notification', 'remove notification' ...)
 * favorites (type 'add fav, show favs, remove fav ...)
-* wallet (type 'wallet')
-* orders (type 'orders')
+* Your Bitfinex wallet (type 'wallet')
+* Your Bitfinex orders (type 'orders')
 
 You can cancel any action by typing 'stop'. For all the commands see: [this list](https://github.com/jantielens/CryptoBuddy/blob/master/commands.md)`;
     session.endDialog(mdMsg);
