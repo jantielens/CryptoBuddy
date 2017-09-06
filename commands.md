@@ -5,6 +5,7 @@ To get started with the chat bot, just type `hi`, `hello` or `yo` (or any other 
 * `add fav`: starts the dialog to add a new favorite symbol to your list
 * `show favs` or `f`: shows your favorite symbols
 * `remove fav`: starts the dialog to remove a symbol from your favorites
+* `remove all favs`: removes all symbols from your favorites
 ## Notifications
 * `add notification`: starts the dialog to add a new notification for a symbol
 * `show notification`: shows your active notifications

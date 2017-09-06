@@ -31,6 +31,12 @@ You can cancel any action by typing 'stop'. For all the commands see: [this list
     session.endDialog(mdMsg);
 });
 
+bot.dialog('help', function (session) {
+    session.endDialog('You can type \'hi\' to get started, or go to https://github.com/jantielens/CryptoBuddy to ask questions and/or provide feedback.');
+}).triggerAction({
+    matches: /^help$/i
+});
+
 bot.dialog('debug', function (session) {
     session.endDialog('Your current address is \n %s', JSON.stringify(session.message.address));
 }).triggerAction({
