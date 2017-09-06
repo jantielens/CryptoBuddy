@@ -7,8 +7,6 @@ const favutils = require('./favorites-utils.js');
 module.exports = [
     function (session) {
         session.sendTyping();
-        // ensure bfx
-        bfxapi.getBfx(session);
 
         var favs = favutils.userFavorites(session);
         var pairCodes = [];

@@ -1,4 +1,3 @@
-var Guid = require('guid');
 var documentClient = require("documentdb").DocumentClient;
 var cosmosdbendpoint = process.env.cosmosdbendpoint;
 var cosmosdbkey = process.env.cosmosdbkey;

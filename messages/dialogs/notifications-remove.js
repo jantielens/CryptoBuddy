@@ -1,9 +1,9 @@
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
-var azure = require('azure-storage');
+//var azure = require('azure-storage');
 
-var tableSvc = azure.createTableService(process.env["cryptobuddyqueuestorage_STORAGE"]);
-var tablename = 'subscriptions';
+//var tableSvc = azure.createTableService(process.env["cryptobuddyqueuestorage_STORAGE"]);
+//var tablename = 'subscriptions';
 
 const notUtils = require('./notifications-utils.js');
 
@@ -13,7 +13,7 @@ module.exports = [
         notUtils.retrieveNotifications(session.message.address.channelId, session.message.address.user.id).then(function (results) {
             var choiceData = {};
             if (results.length > 0) {
-                for (result of results) {
+                for (var result of results) {
                     var label = '';
 
                     switch (result.notificationtype) {

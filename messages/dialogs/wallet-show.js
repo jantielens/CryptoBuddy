@@ -2,21 +2,29 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 const util = require('util');
 const bfxapi = require('../bfx.js');
+const authutils = require('./authenticate-utils.js');
 
 module.exports = [
     function (session) {
-        session.sendTyping();
+        
         var msg = new builder.Message(session);
         msg.attachmentLayout(builder.AttachmentLayout.carousel)
 
         createWalletMessage(msg, session).then(function () {
             session.send(msg).endDialog();
+        }).catch((e) => {
+            session.endDialog(e);
         });
     }
 ];
 
 function createWalletMessage(msg, session) {
     return new Promise((resolve, reject) => {
+        if (!authutils.isAuthenticated(session)) {
+            reject('You are not yet authenticated, use the \'auth\' command to start authentication.');
+            return;
+        }
+        session.sendTyping();
         bfxapi.GetWallets(session).then(function (w) {
 
             var symbols = [];

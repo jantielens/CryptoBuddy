@@ -1,7 +1,5 @@
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
-const util = require('util');
-const bfxapi = require('../bfx.js');
 const favutils = require('./favorites-utils.js');
 
 module.exports = [

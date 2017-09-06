@@ -40,6 +40,5 @@ module.exports = [
             session.endDialog('I\'ve stored them in this conversation!');
         else
             session.endDialog('I\'ve stored them for you, remember to log out to delete them!');
-        bfxapi.clearBfx(); // so next time we will actually use them
     }
 ];

@@ -22,8 +22,8 @@ bot.dialog('/', function (session) {
     session.send("Hi, I'm your cryptocurrency buddy!");
     //session.send('You said: ' + session.message.textFormat + '-' + session.message.text);
     //session.send(JSON.stringify(session.message));
-    var mdMsg = 
-`I can work with:
+    var mdMsg =
+        `I can work with:
 * price notifications (type 'add notification', 'show notification', 'remove notification' ...)
 * favorites (type 'add fav, show favs, remove fav ...)
 * wallet (type 'wallet')
@@ -138,7 +138,17 @@ bot.dialog('auth', require('./dialogs/authenticate-do')
     matches: /^auth$/i
 }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
     matches: /^nevermind$|^cancel$|^stop/i
-});;
+});
+
+bot.dialog('logoff', function (session) {
+    session.userData.apikey = null;
+    session.userData.apisecret = null;
+    session.privateConversationData.apikey = null;
+    session.privateConversationData.apisecret = null;
+    session.endDialog('Your API key and secret have been deleted.');
+}).triggerAction({
+    matches: [/^logoff$/i, /^log off$/i, /^signout$/i, /^lsign out$/i]
+});
 
 bot.dialog('status', require('./dialogs/authenticate-status')
 ).triggerAction({
