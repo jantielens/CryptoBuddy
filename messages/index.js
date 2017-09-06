@@ -20,15 +20,23 @@ bot.localePath(path.join(__dirname, './locale'));
 // *** DIALOGS: General
 bot.dialog('/', function (session) {
     session.send("Hi, I'm your cryptocurrency buddy!");
-    session.send('You said: ' + session.message.textFormat + '-' + session.message.text);
-    session.send(JSON.stringify(session.message));
-    session.endDialog('You can use the following commands: wallet, orders, show fav, add fav, remove fav, auth, status, version.');
+    //session.send('You said: ' + session.message.textFormat + '-' + session.message.text);
+    //session.send(JSON.stringify(session.message));
+    var mdMsg = 
+`I can work with:
+* price notifications (type 'add notification', 'show notification', 'remove notification' ...)
+* favorites (type 'add fav, show favs, remove fav ...)
+* wallet (type 'wallet')
+* orders (type 'orders')
+
+You can cancel any action by typing 'stop'. For all the commands see: [this list](https://github.com/jantielens/CryptoBuddy/blob/master/commands.md)`;
+    session.endDialog(mdMsg);
 });
 
-bot.dialog('address', function (session) {
+bot.dialog('debug', function (session) {
     session.endDialog('Your current address is \n %s', JSON.stringify(session.message.address));
 }).triggerAction({
-    matches: /^address$/i
+    matches: /^debug$/i
 });
 
 bot.dialog('version', function (session) {
@@ -52,26 +60,25 @@ bot.dialog('addnotif', require('./dialogs/notifications-add')
 });
 
 bot.dialog('addnotifshortcut', require('./dialogs/notifications-add-shortcut')
-).
-    triggerAction({
-        onFindAction: function (context, callback) {
-            // using this function instead of matches to get around the fact Skype thinks < is xml
-            var origtext = context.message.text;
-            if (context.message.sourceEvent.text)
-                origtext = context.message.sourceEvent.text;
+).triggerAction({
+    onFindAction: function (context, callback) {
+        // using this function instead of matches to get around the fact Skype thinks < is xml
+        var origtext = context.message.text;
+        if (context.message.sourceEvent.text)
+            origtext = context.message.sourceEvent.text;
 
-            var re = /^add \w{6} [<>] \d*\.?\d*$/i;
-            var myArray = re.exec(origtext);
+        var re = /^add \w{6} [<>] \d*\.?\d*$/i;
+        var myArray = re.exec(origtext);
 
-            if (myArray)
-                callback(null, 1.1);
-            else
-                callback(null, 0);
-        }
-        //matches: /^add \w{6} [<>] \d*\.?\d*$/i
-    }).cancelAction('cancelAction', 'Ok, cancelling your action!', {
-        matches: /^nevermind$|^cancel$|^stop/i
-    });
+        if (myArray)
+            callback(null, 1.1);
+        else
+            callback(null, 0);
+    }
+    //matches: /^add \w{6} [<>] \d*\.?\d*$/i
+}).cancelAction('cancelAction', 'Ok, cancelling your action!', {
+    matches: /^nevermind$|^cancel$|^stop/i
+});
 
 bot.dialog('removeallnotif', require('./dialogs/notifications-remove')
 ).triggerAction({
