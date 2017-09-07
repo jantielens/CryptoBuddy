@@ -18,7 +18,7 @@ module.exports = [
     
         else {
             session.send("You are not yet authenticated.");
-            session.endDialog('You can start the authentication by typing \auth\'');
+            session.endDialog('You can start the authentication by typing \'auth\'');
         }
     }
 ];
