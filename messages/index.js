@@ -76,7 +76,7 @@ bot.dialog('addnotifshortcut', require('./dialogs/notifications-add-shortcut')
         if (context.message.sourceEvent.text)
             origtext = context.message.sourceEvent.text;
 
-        var re = /^add \w{6} [<>] \d*\.?\d*$/i;
+        var re = /^add \w{6} [<>] \d*\.?\d* .*$/i;
         var myArray = re.exec(origtext);
 
         if (myArray)

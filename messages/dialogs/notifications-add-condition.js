@@ -32,11 +32,16 @@ module.exports = [
         builder.Prompts.number(session, 'What\'s the price you want to check?');
     },
     function (session, results) {
+        session.dialogData.price = results.response;
+        builder.Prompts.text(session, "What name would you like to give to this notification?");
+    },
+    function (session, results) {
         var sub = notUtils.getBaseNotification('condition', session.message.address);
 
         sub.symbol = session.dialogData.symbol;
         sub.operator = session.dialogData.operator;
-        sub.price = results.response;
+        sub.price = session.dialogData.price;
+        sub.name = results.response;
 
         notUtils.createNotification(sub).then((r) => {
             session.endDialog('Notification created!');

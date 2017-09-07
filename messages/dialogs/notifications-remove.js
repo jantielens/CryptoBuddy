@@ -18,10 +18,10 @@ module.exports = [
 
                     switch (result.notificationtype) {
                         case "condition":
-                            label = `${result.symbol} ${result.operator} ${result.price}`;
+                            label = `${result.symbol} ${result.operator} ${result.price} - ${result.name}`;
                             break;
                         case "interval":
-                            label = `${result.symbol} interval ${result.interval} (prev. price ${result.previousprice})`;
+                            label = `${result.symbol} interval ${result.interval} (prev. price ${result.previousprice}) - ${result.name}`;
                             break;
                         default:
                             label = `${result.symbol} unkown type: ` + result.notificationtype;
