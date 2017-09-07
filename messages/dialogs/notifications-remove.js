@@ -2,11 +2,7 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 //var azure = require('azure-storage');
 
-//var tableSvc = azure.createTableService(process.env["cryptobuddyqueuestorage_STORAGE"]);
-//var tablename = 'subscriptions';
-
 const notUtils = require('./notifications-utils.js');
-
 
 module.exports = [
     function (session) {
