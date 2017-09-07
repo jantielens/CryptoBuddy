@@ -2,7 +2,8 @@ var documentClient = require("documentdb").DocumentClient;
 var cosmosdbendpoint = process.env.cosmosdbendpoint;
 var cosmosdbkey = process.env.cosmosdbkey;
 var cosmosdburl = process.env.cosmosdburl;
-var collectionUrl = cosmosdburl + '/colls/default';
+var cosmosdbcollection = process.env.collection;
+var collectionUrl = cosmosdburl + '/colls/' + cosmosdbcollection;
 
 var client = new documentClient(cosmosdbendpoint, { "masterKey": cosmosdbkey });
 
@@ -27,7 +28,7 @@ self = module.exports = {
 
     createNotification: function (notification) {
         return new Promise((resolve, reject) => {
-            var collectionUrl = `${cosmosdburl}/colls/default`;
+            var collectionUrl = `${cosmosdburl}/colls/${cosmosdbcollection}`;
             client.createDocument(collectionUrl, notification, {}, function (e) {
                 if (e)
                     reject(e);
