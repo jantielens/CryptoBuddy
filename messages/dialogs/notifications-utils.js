@@ -13,6 +13,7 @@ self = module.exports = {
         //var notid = Guid.create().toString();
         var sub = {
             "type": "notification",
+            "environment": process.env.environment,
             "notificationtype": notificationtype,
             "isactive": true,
             "channelid": address.channelId,
@@ -43,7 +44,7 @@ self = module.exports = {
         return new Promise((resolve, reject) => {
             client.queryDocuments(
                 collectionUrl,
-                `SELECT * FROM c WHERE c.type = "notification" AND c.channelid="${channelid}" AND c.toid ="${userid}"`
+                `SELECT * FROM c WHERE c.type = "notification" AND c.environment = "${process.env.environment}" AND c.channelid="${channelid}" AND c.toid ="${userid}"`
             ).toArray((err, results) => {
                 if (err) reject(err);
                 resolve(results);
