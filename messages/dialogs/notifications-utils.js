@@ -2,7 +2,7 @@ var documentClient = require("documentdb").DocumentClient;
 var cosmosdbendpoint = process.env.cosmosdbendpoint;
 var cosmosdbkey = process.env.cosmosdbkey;
 var cosmosdburl = process.env.cosmosdburl;
-var cosmosdbcollection = process.env.collection;
+var cosmosdbcollection = process.env.cosmosdbcollection;
 var collectionUrl = cosmosdburl + '/colls/' + cosmosdbcollection;
 
 var client = new documentClient(cosmosdbendpoint, { "masterKey": cosmosdbkey });
