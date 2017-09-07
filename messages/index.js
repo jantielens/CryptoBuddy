@@ -22,7 +22,7 @@ bot.dialog('/', function (session) {
     //session.send(JSON.stringify(session.message));
     var mdMsg =
         `I can work with:
-* price notifications (type 'add notification', 'show notification', 'remove notification' ...)
+* price notifications (type 'add notification', 'show notifications', 'remove notification' ...)
 * favorites (type 'add fav, show favs, remove fav ...)
 * Your Bitfinex wallet (type 'wallet')
 * Your Bitfinex orders (type 'orders')
