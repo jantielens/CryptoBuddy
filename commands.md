@@ -10,8 +10,8 @@ To get started with the chat bot, just type `hi`, `hello` or `yo` (or any other 
 * `add notification`: starts the dialog to add a new notification for a symbol
 * `show notification`: shows your active notifications
 * `remove notification`: starts the dialog to remove a notification for a symbol
-* Shortcut to add a conditional notification: `add` *symbol* `<` or `> ` *price* . 
-For example `add BTCUSD > 10000` will create a notification when the **USD** price of **BTC** will go higher than **10000**. Pay attention to the spaces!
+* Shortcut to add a conditional notification: `add` *symbol* `<` or `> ` *price* *name* . 
+For example `add BTCUSD > 10000 sample notification` will create a notification when the **USD** price of **BTC** will go higher than **10000**. The name of this notification will be **sample notification**. Pay attention to the spaces!
 ## Orders
 You need to be authenticated to access your Bitfinex orders (see Authentication below).
 * `orders` or `o`: shows your active Bitfinex orders
