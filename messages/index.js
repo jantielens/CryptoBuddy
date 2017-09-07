@@ -32,7 +32,7 @@ bot.dialog('help', function (session) {
     var mdMsg =
         `I can work with:
 * price notifications (type 'add notification', 'show notifications', 'remove notification' ...)
-* favorites (type 'add fav, show favs, remove fav ...)
+* favorites (type 'add favorite', 'show favorites', 'remove favovrite' ...)
 * Your Bitfinex wallet (type 'wallet')
 * Your Bitfinex orders (type 'orders')
 
