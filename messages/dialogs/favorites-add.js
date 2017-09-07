@@ -23,6 +23,6 @@ module.exports = [
     },
     function (session, results) {
         favutils.userFavorites(session).push(results.response.entity);
-        session.endDialog('Great, I\'ve added the coin to your favorites.');
+        session.endDialog('Great, I\'ve added the coin to your favorites. Type \'show favorites\' to list them.');
     }
 ];

@@ -17,9 +17,18 @@ bot.localePath(path.join(__dirname, './locale'));
 
 // *** DIALOGS: General
 bot.dialog('/', function (session) {
-    session.send("Hi, I'm your cryptocurrency buddy!");
-    //session.send('You said: ' + session.message.textFormat + '-' + session.message.text);
-    //session.send(JSON.stringify(session.message));
+    var firstname = session.message.address.user.name.split(' ')[0];
+
+    session.send(`Hi ${firstname}, I'm your cryptocurrency buddy!`);
+    session.send('You can type \'add favorite\' to get started, or \'help\' for more commands.');
+    if (!session.userData.regularuser) {
+        session.userData.regularuser = true;
+        session.send('Also, since you are new here, a gentle reminder to check the privacy policy of this bot: https://github.com/jantielens/CryptoBuddy/blob/master/privacypolicy.md');
+    }
+    session.endDialog();
+});
+
+bot.dialog('help', function (session) {
     var mdMsg =
         `I can work with:
 * price notifications (type 'add notification', 'show notifications', 'remove notification' ...)
@@ -29,15 +38,8 @@ bot.dialog('/', function (session) {
 
 You can cancel any action by typing 'stop'. For all the commands see: [this list](https://github.com/jantielens/CryptoBuddy/blob/master/commands.md)`;
     session.send(mdMsg);
-    if (!session.userData.regularuser) {
-        session.userData.regularuser = true;
-        session.send('Also, since you are new here, a gentle reminder to check the privacy policy of this bot: https://github.com/jantielens/CryptoBuddy/blob/master/privacypolicy.md');
-    }
-    session.endDialog();
-});
 
-bot.dialog('help', function (session) {
-    session.endDialog('You can type \'hi\' to get started, or go to https://github.com/jantielens/CryptoBuddy to ask questions and/or provide feedback.');
+    session.endDialog('Go to https://github.com/jantielens/CryptoBuddy to ask questions and/or provide feedback.');
 }).triggerAction({
     matches: /^help$/i
 });
