@@ -5,7 +5,7 @@ const bfxapi = require('../bfx.js');
 module.exports = [
     function (session) {
         var symbols = bfxapi.GetSymbols(session).then(function (symbols) {
-            builder.Prompts.choice(session, 'Which coin are you interested in?', symbols, { listStyle: builder.ListStyle.list });
+            builder.Prompts.choice(session, 'Which coin are you interested in?', symbols, { listStyle: builder.ListStyle.inline });
         });
     },
     function (session, results) {
