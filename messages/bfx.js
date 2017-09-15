@@ -32,14 +32,17 @@ var self = module.exports = {
 
     GetLatestPriceForElement: function (coinelement, session) {
         return new Promise((resolve, reject) => {
+            if (coinelement[1] == 'USD')
+                resolve();
+                
             var coincode = 't' + coinelement[1] + 'USD';
             var options = { method: 'GET', url: 'https://api.bitfinex.com/v2/ticker/' + coincode };
 
             request(options, function (error, response, body) {
-                if(error) reject(error);
+                if (error) reject(error);
                 resolve(JSON.parse(body));
             });
-            
+
             // self.getBfx(session).makePublicRequest('/ticker/' + coincode, function (err, resp) {
             //     if (err) reject(err);
             //     resolve(resp);
@@ -53,7 +56,7 @@ var self = module.exports = {
             var options = { method: 'GET', url: 'https://api.bitfinex.com/v2/ticker/' + coincode };
 
             request(options, function (error, response, body) {
-                if(error) reject(error);
+                if (error) reject(error);
                 resolve(JSON.parse(body));
             });
 
