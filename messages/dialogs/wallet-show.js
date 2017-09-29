@@ -39,10 +39,13 @@ function createWalletMessage(msg, session) {
 
 
             results.then(function (prices) {
+                var usdtotal = 0;
+
                 for (var i = 0; i < symbols.length; i++) {
                     var symbol = symbols[i][1];
                     var amount = symbols[i][2];
                     if (symbol == 'USD') {
+                        usdtotal += amount;
                         msg.addAttachment(new builder.HeroCard(session)
                             .title(util.format('%s %d', symbol, amount))
                         );
@@ -53,6 +56,8 @@ function createWalletMessage(msg, session) {
                         var lowprice = prices[i][9];
                         var highprice = prices[i][8];
 
+                        usdtotal += (amount * price);
+
                         msg.addAttachment(new builder.HeroCard(session)
                             .title(util.format('%s %d', symbol, amount))
                             .subtitle(util.format('Value USD %s'), (amount * price).toFixed(2))
@@ -60,6 +65,11 @@ function createWalletMessage(msg, session) {
                         );
                     }
                 }
+
+                msg.addAttachment(new builder.HeroCard(session)
+                    .title('Total wallet value')
+                    .subtitle(util.format('USD %s'), usdtotal.toFixed(2))
+                );
                 resolve();
             });
         });
